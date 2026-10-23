@@ -1275,7 +1275,7 @@ function cmdServe(portArg) {
   // iframe's CSS/WAAPI animations to the same time — so any CSS-animation page renders faithfully to
   // MP4 via HF's frame-accurate Chrome capture (WebGL-capable). rAF/JS-clock motion is not seekable
   // this way (a known limit; see HTML-TO-VIDEO.md). Requires `npx hyperframes` (Node ≥22 + FFmpeg).
-  var HF_BIN = process.env.HYPERFRAMES_BIN || 'npx';
+  var HF_BIN = process.env.HYPERFRAMES_BIN || (fs.existsSync('/usr/bin/hyperframes') ? '/usr/bin/hyperframes' : (fs.existsSync('/usr/local/bin/hyperframes') ? '/usr/local/bin/hyperframes' : 'npx'));
   function hfArgs(rest) { return HF_BIN === 'npx' ? ['--yes', 'hyperframes@latest'].concat(rest) : rest; }
   function hfWrapperHtml(artifactHtml, o) {
     o = o || {}; var dur = Math.max(1, Math.min(60, +o.duration || 6));
